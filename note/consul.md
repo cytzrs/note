@@ -370,3 +370,94 @@ public class Semaphore {
     }
 
 }
+
+
+Consul kv api
+/v1/kv/keyname reset api
+REQUESTMETHOD:
+    put   create/update
+    delte delete
+    get   get
+
+Consul health api
+先更具consul members获取node的名称
+/v1/health/node/node
+ curl http://localhost:8500/v1/health/node/cytzrs
+
+ /health/checks/:service
+ /health/service/:service
+ /health/state/:
+
+ Consul catalog api
+ /catalog/register
+ curl \
+    --request PUT \
+    --data @payload.json \
+    https://localhost:8500/v1/catalog/register
+
+    {
+      "Datacenter": "dc1",
+      "ID": "40e4a748-2192-161a-0510-9bf59fe950b5",
+      "Node": "foobar",
+      "Address": "192.168.10.10",
+      "TaggedAddresses": {
+        "lan": "192.168.10.10",
+        "wan": "10.0.10.10"
+      },
+      "NodeMeta": {
+        "somekey": "somevalue"
+      },
+      "Service": {
+        "ID": "redis1",
+        "Service": "redis",
+        "Tags": [
+          "primary",
+          "v1"
+        ],
+        "Address": "127.0.0.1",
+        "Port": 8000
+      },
+      "Check": {
+        "Node": "foobar",
+        "CheckID": "service:redis1",
+        "Name": "Redis health check",
+        "Notes": "Script based health check",
+        "Status": "passing",
+        "ServiceID": "redis1"
+      }
+    }
+/catalog/deregister
+curl \
+    --request PUT \
+    --data @payload.json \
+    https://localhost:8500/v1/catalog/deregister
+    {
+      "Datacenter": "dc1",
+      "Node": "foobar"
+    }
+    {
+      "Datacenter": "dc1",
+      "Node": "foobar",
+      "CheckID": "service:redis1"
+    }
+    {
+      "Datacenter": "dc1",
+      "Node": "foobar",
+      "ServiceID": "redis1"
+    }
+
+/catalog/datacenters 列出所有的数据中心
+http://localhost:8500/v1/catalog/datacenters
+
+
+/catalog/nodes
+http://localhost:8500/v1/catalog/nodes
+
+/catalog/services
+http://localhost:8500/v1/catalog/services
+
+/catalog/service/:service
+http://localhost:8500/v1/catalog/service/web
+
+/catalog/node/:node
+http://localhost:8500/v1/catalog/node/cytzrs

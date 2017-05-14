@@ -2,7 +2,6 @@
 docker pull gliderlabs/registrator:latest
 1，先运行一个Consul
 docker run -d --name=consul --net=host gliderlabs/consul-server -bootstrap
-docker run -d --name=consul --net=host gliderlabs/consul-server -bootstrap
 curl http://127.0.0.1:8500/v1/catalog/services
 {
     "consul": [],

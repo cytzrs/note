@@ -85,3 +85,23 @@ List的三种实现：ArrayList，Vector和LinkedList
 ArrayList和Vector使用了数组实现，也可以认为ArrayList或者Vector封装了对内部数组的操作。比如向数组中添加，删除，插入新的元素或者数组的扩展和重定义。
 ArrayList和Vector几乎使用了相同的算法，它们的唯一区别可以认为是对多线程的支持。ArrayList没有对任何一个方法做线程同步，因此不是线程安全的。Vector中绝大部分方法都做了线程同步，是一种线程安全的实现。因此，ArrayList和Vector的性能相差无几，从理论上说，没有实现线程同步的ArrayList要稍好于Vector，但实际表现并不是非常明显。
 LinkedList使用了循环双向链表数据结构，在JDK的实现中，无论LinkedList是否为空，链表内都有一个header表项，它即表示链表的开始，也表示链表的结尾。表项header的后驱表项便是链表便是链表中第一个元素，表项header的前驱表项便是链表中最后一个元素。
+
+Hashtable与HashMap区别：
+1，Hashtable大部分方法做了同步，而HashMap没有，因此HashMap不是线程安全的。
+2，Hashtable不允许key或者value使用null值，而HashMap可以
+3，它们对key的hash算法和hash值到内存索引的映射算法不同
+
+主要的区别有：线程安全性，同步(synchronization)，以及速度。
+
+HashMap几乎可以等价于Hashtable，除了HashMap是非synchronized的，并可以接受null(HashMap可以接受为null的键值(key)和值(value)，而Hashtable则不行)。
+HashMap是非synchronized，而Hashtable是synchronized，这意味着Hashtable是线程安全的，多个线程可以共享一个Hashtable；而如果没有正确的同步的话，多个线程是不能共享HashMap的。Java 5提供了ConcurrentHashMap，它是HashTable的替代，比HashTable的扩展性更好。
+另一个区别是HashMap的迭代器(Iterator)是fail-fast迭代器，而Hashtable的enumerator迭代器不是fail-fast的。所以当有其它线程改变了HashMap的结构（增加或者移除元素），将会抛出ConcurrentModificationException，但迭代器本身的remove()方法移除元素则不会抛出ConcurrentModificationException异常。但这并不是一个一定发生的行为，要看JVM。这条同样也是Enumeration和Iterator的区别。
+由于Hashtable是线程安全的也是synchronized，所以在单线程环境下它比HashMap要慢。如果你不需要同步，只需要单一线程，那么使用HashMap性能要好过Hashtable。
+HashMap不能保证随着时间的推移Map中的元素次序是不变的。
+
+TreeMap提供的其他的有关排序的接口:
+SortedMap<K, V> subMap(K fromKey, K toKey);  
+SortedMap<K, V> headMap(K toKey);
+SortedMap<K, V> tailMap(K fromKey);
+K firstKey();
+K lastKey();

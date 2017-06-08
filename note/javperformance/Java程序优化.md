@@ -105,3 +105,5 @@ SortedMap<K, V> headMap(K toKey);
 SortedMap<K, V> tailMap(K fromKey);
 K firstKey();
 K lastKey();
+
+Object.clone()方法可以绕过对象构造函数，快速复制一个对象实例。由于不需要调用对象构造函数，因此，clone()方法不会受到构造函数性能的影响，能够快速生成一个实例。但是默认情况下，clone()方法生成的实例只是原对象的浅拷贝。如果需要深拷贝，则需要重新实现clone()方法。
